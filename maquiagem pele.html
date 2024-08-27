@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Make na lista!</title>
+    <link rel="shortcut icon" type="x-icon" href="logo.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            background-image: url('base.png');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        .navbar {
+            width: 100%;
+            background-color: white;
+            text-align: center;
+            padding: 10px 0;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            position: sticky;
+        }
+
+        .navbar a {
+            color: pink;
+            text-decoration: none;
+            padding: 14px 20px;
+            font-size: 20px;
+            display: inline-block;
+        }
+
+        .navbar a:hover {
+            background-color: #f0f0f0;
+        }
+
+        .navbar a i {
+            margin-right: 10px;
+        }
+
+        .content {
+            text-align: center;
+            margin-top: 20px;
+            flex: 1;
+            padding: 0 10px;
+        }
+
+        .content h1 {
+            color: pink;
+            font-size: 36px;
+            background-color: white;
+            display: inline-block;
+            padding: 10px 20px;
+            border-radius: 10px;
+        }
+
+        .content p {
+            color: pink;
+            font-size: 24px;
+            margin: 5px auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 20px;
+            max-width: 800px;
+            box-sizing: border-box; 
+        }
+
+        .botao {
+            border: solid 1px pink;
+            border-radius: 20px;
+            color: white;
+            background-color: pink;
+            transition: background-color 0.5s ease, color 0.5s ease, transform 0.5s ease, box-shadow 0.5s ease;
+            padding: 10px 20px;
+            cursor: pointer;
+            display: inline-block; 
+            text-align: center;
+        }
+
+        .botao:hover {
+            background-color: pink;
+            color: white;
+            transform: scale(1.1);
+            box-shadow: 0 0 10px rgba(255, 105, 180, 0.5);
+        }
+
+        #inputItem, #inputDescription {
+            margin-right: 10px;
+            padding: 10px;
+            width: 100%;
+            max-width: 300px;
+            border: 2px solid pink;
+            border-radius: 20px;
+            background-color: white;
+            color: pink;
+            box-sizing: border-box;
+        }
+
+        #inputDescription {
+            margin-bottom: 10px; 
+        }
+
+        #inputItem::placeholder, #inputDescription::placeholder {
+            color: pink;
+        }
+
+        #inputItem:hover, #inputItem:focus, #inputDescription:hover, #inputDescription:focus {
+            border-color: pink;
+            outline: none;
+        }
+
+        #inputImage {
+            display: none;
+        }
+
+        #labelImage {
+    margin-right: 10px;
+    border: solid 1px pink;
+    border-radius: 20px; 
+    color: white;
+    background-color: pink;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.5s ease, color 0.5s ease, transform 0.5s ease, box-shadow 0.5s ease;
+    text-align: center;
+    display: inline-block;
+    font-size: 16px; 
+}
+
+#labelImage:hover {
+    background-color: pink;
+    color: white;
+    transform: scale(1.1);
+    box-shadow: 0 0 10px rgba(255, 105, 180, 0.5);
+}
+
+        #listaTarefas {
+            list-style-type: none;
+            padding: 0;
+            margin: 20px auto;
+            max-width: 800px;
+        }
+
+        #listaTarefas li {
+            margin-bottom: 20px;
+            padding: 10px;
+            border-radius: 10px;
+            background-color: white;
+            border: none;
+            font-weight: 300;
+            text-align: center;
+            position: relative;
+        }
+
+        .itemContent {
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .itemContent h3 {
+            margin: 0;
+            color: black;
+        }
+
+        .description {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .description p {
+            margin: 0;
+            margin-bottom: 10px;
+        }
+
+        .description img {
+            max-width: 100px;
+            display: block;
+            margin-top: 10px;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+            gap: 10px;
+        }
+
+        .buttons button {
+            padding: 5px 10px;
+            background-color: transparent;
+            color: pink;
+            border: none;
+            cursor: pointer;
+        }
+
+        .buttons button:hover {
+            color: pink;
+            font-size: 16px;
+        }
+
+        .details {
+            display: none;
+        }
+
+        .destacado {
+            background-color: pink !important;
+            border-radius: 100px;
+            color: white;
+        }
+
+        .destacado button {
+            color: white !important;
+            background-color: transparent;
+        }
+
+        .footer {
+            background-color: white;
+            text-align: center;
+            width: 100%;
+            padding: 20px 0;
+            bottom: 0;
+            left: 0;
+        }
+
+        .footer p {
+            margin: 0;
+            color: pink;
+            font-size: 15px;
+        }
+
+        @media (max-width: 768px) {
+            .navbar a {
+                font-size: 16px;
+                padding: 10px;
+            }
+
+            .content h1 {
+                font-size: 28px;
+            }
+
+            .content p {
+                font-size: 18px;
+                padding: 15px;
+            }
+
+            .botao, #labelImage {
+    margin-right: 10px;
+    border: solid 1px pink;
+    border-radius: 20px; 
+    color: white;
+    background-color: pink;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.5s ease, color 0.5s ease, transform 0.5s ease, box-shadow 0.5s ease;
+    text-align: center;
+    display: inline-block;
+    font-size: 16px; 
+}
+
+#labelImage:hover {
+    background-color: pink;
+    color: white;
+    transform: scale(1.1);
+    box-shadow: 0 0 10px rgba(255, 105, 180, 0.5);
+}
+
+
+            #inputItem, #inputDescription, #inputImage {
+                max-width: 100%;
+            }
+
+            .description img {
+                max-width: 80px;
+            }
+
+            .footer p {
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .navbar a {
+                font-size: 14px;
+                padding: 8px;
+            }
+
+            .content h1 {
+                font-size: 24px;
+            }
+
+            .content p {
+                font-size: 16px;
+                padding: 10px;
+            }
+
+            #inputItem, #inputDescription, #inputImage {
+                max-width: 100%;
+            }
+
+            .description img {
+                max-width: 60px;
+            }
+
+            .footer p {
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <a href="index.html"><i class="fas fa-home"></i>Home</a>
+        <a href="maquiagem pele.html"><i class="fas fa-smile"></i>Pele</a>
+        <a href="maquiagem olho.html"><i class="fas fa-eye"></i>Olhos</a>
+        <a href="maquiagem boca.html"><i class="fas fa-kiss-wink-heart"></i>Boca</a>
+    </div>
+
+    <div class="content">
+        <h1>Produtos para Pele:</h1>
+        <p>
+            <input type="text" id="inputItem" placeholder="Nome do Produto">
+            <input type="text" id="inputDescription" placeholder="Descrição do Produto" style="margin-bottom: 10px;">
+            <input type="file" id="inputImage" style="display: none;">
+            <label for="inputImage" id="labelImage">Escolher Imagem</label>
+            <button type="button" class="botao" onclick="Adicionar()">Adicionar</button>
+        </p>
+        <ul id="listaTarefas"></ul>
+    </div>
+
+    <div class="footer">
+        <p>Beatriz Antunes e Bruna Miyuki Yasuda</p>
+    </div>
+
+    <script>
+        function Adicionar() {
+            var nomeProduto = document.getElementById('inputItem').value;
+            var descricaoProduto = document.getElementById('inputDescription').value;
+            var imagemArquivo = document.getElementById('inputImage').files[0];
+
+            if (nomeProduto && descricaoProduto && imagemArquivo) {
+                var lista = document.getElementById('listaTarefas');
+
+                var novoItem = document.createElement('li');
+
+                var itemContent = document.createElement('div');
+                itemContent.className = 'itemContent';
+                var nome = document.createElement('h3');
+                nome.textContent = nomeProduto;
+                itemContent.appendChild(nome);
+
+                var detalhesDiv = document.createElement('div');
+                detalhesDiv.className = 'details';
+
+                var productDescription = document.createElement('div');
+                productDescription.className = 'description';
+
+                var descricao = document.createElement('p');
+                descricao.textContent = descricaoProduto;
+                productDescription.appendChild(descricao);
+
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    var imagem = document.createElement('img');
+                    imagem.src = e.target.result;
+                    productDescription.appendChild(imagem);
+                };
+                reader.readAsDataURL(imagemArquivo);
+
+                detalhesDiv.appendChild(productDescription);
+
+                var botoesDiv = document.createElement('div');
+                botoesDiv.className = 'buttons';
+
+                var botaoDestacar = document.createElement('button');
+                botaoDestacar.innerHTML = '<i class="fas fa-star"></i> Destacar';
+                botaoDestacar.onclick = function() {
+                    novoItem.classList.toggle('destacado');
+                };
+
+                var botaoExcluir = document.createElement('button');
+                botaoExcluir.innerHTML = '<i class="fas fa-trash"></i> Excluir';
+                botaoExcluir.onclick = function() {
+                    lista.removeChild(novoItem);
+                };
+
+                var botaoMostrarDetalhes = document.createElement('button');
+                botaoMostrarDetalhes.innerHTML = '<i class="fas fa-eye"></i> Mostrar Detalhes';
+                botaoMostrarDetalhes.onclick = function() {
+                    detalhesDiv.style.display = detalhesDiv.style.display === 'none' ? 'block' : 'none';
+                };
+
+                botoesDiv.appendChild(botaoDestacar);
+                botoesDiv.appendChild(botaoExcluir);
+                botoesDiv.appendChild(botaoMostrarDetalhes);
+
+                novoItem.appendChild(itemContent);
+                novoItem.appendChild(detalhesDiv);
+                novoItem.appendChild(botoesDiv);
+
+                lista.appendChild(novoItem);
+
+                document.getElementById('inputItem').value = '';
+                document.getElementById('inputDescription').value = '';
+                document.getElementById('inputImage').value = '';
+            } else {
+                alert('Por favor, preencha todos os campos e escolha uma imagem.');
+            }
+        }
+    </script>
+</body>
+</html>
